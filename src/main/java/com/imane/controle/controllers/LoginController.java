@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/login")
-public class UserController {
+public class LoginController {
     @Autowired
-    private UserRepository loginRep;
+    private UserRepository userRepository;
     @GetMapping("/verification")
     public String verifie(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, Model model) {
-        User log=loginRep.verifie(username, password);
+        User user=userRepository.verifie(username, password);
         boolean b=true;
-        if(log==null) {
+        if(user==null) {
             String msg="usename or password incorrect";
             b=false;
             model.addAttribute("b",b);
@@ -26,7 +26,13 @@ public class UserController {
             return "login";
 
         }else {
-            return "index";
+            return "home";
         }
     }
+
+    @GetMapping
+    public String showLogin(Model model){
+        return "login";
+    }
+
 }

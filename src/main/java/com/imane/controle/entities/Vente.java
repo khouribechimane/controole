@@ -1,9 +1,18 @@
 package com.imane.controle.entities;
 import jakarta.persistence.*;
+import lombok.*;
+
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Data
+@Builder
 public class Vente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,43 +27,7 @@ public class Vente {
     private String client;
     private double montantTotal;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public List<Produit> getProduits() {
-        return produits;
-    }
-
     public void addProduit(Produit produit) {
         this.produits.add(produit);
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public double getMontantTotal() {
-        return montantTotal;
-    }
-
-    public void setMontantTotal(double montantTotal) {
-        this.montantTotal = montantTotal;
     }
 }

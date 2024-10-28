@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Product Manager</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <style>
@@ -63,7 +63,7 @@
     </style>
 </head>
 
-<body class="bg-light">
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
@@ -84,36 +84,97 @@
     </div>
 </nav>
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Login</h3>
-                </div>
-                <div class="card-body">
+<div th:switch="${produits}" class="container my-2">
 
-                    <form th:action="@{/login/verification}" method="get">
-                        <div class="alert alert-danger" th:if="${b==false}">
-                            <span th:text="${msg}"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
-                    </form>
-                </div>
+    <th:block th:if="${#lists.isEmpty(produits)}">
+        <div class="text-center">
+            <h2>No Produits yet!</h2>
+        </div>
+    </th:block>
+
+    <th:block th:if="${not #lists.isEmpty(produits)}">
+
+        <div class="text-center">
+            <h1>Produits List</h1>
+        </div>
+        <table id="machinesTable" border="1" class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Marque</th>
+                <th>Prix</th>
+                <th>Modifier</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="produit : ${produits}">
+                <td th:text="${produit.id}"></td>
+                <td th:text="${produit.nom}"></td>
+                <td th:text="${produit.marque}"></td>
+                <td th:text="${produit.prix}"></td>
+
+                <td><a th:href="@{/produit/edit/{id}(id=${produit.id})}" class="btn btn-primary">Modifier</a>
+                </td>
+                <td>
+                    <a href="#" id="delete" class="btn btn-danger" data-toggle="modal"
+                       data-target="#deleteConfirmationModal"
+                       th:attr="data-machineid=${produit.id}">Supprimer</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+</div>
+
+<div class="text-center">
+    <a th:href="@{/produit/signup}" class="btn btn-primary btn-sm mx-auto">Ajouter Produit</a>
+</div>
+
+
+
+
+<!-- ... Votre code existant ... -->
+
+<!-- Modal for Delete Confirmation -->
+<div class="modal" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+     aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cet élément ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <a href="#" class="btn btn-danger" onclick="confirmDelete()">Confirmer la suppression</a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap JS and dependencies -->
+
+
+<!-- JavaScript pour mettre à jour le lien de suppression avec l'ID du user -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function confirmDelete() {
+        var employeeIdToDelete = parseInt(document.getElementById('delete').getAttribute('data-machineid'), 10);
+        var deleteLink = "/produit/delete/" + employeeIdToDelete;
+        window.location.href = deleteLink;
+    }
+    /*]]>*/
+</script>
+
+
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -123,6 +184,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
 </body>
 
 </html>

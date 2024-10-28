@@ -13,7 +13,7 @@ public class Vente {
     private Date date;
 
     @OneToMany
-    private List<Produit> produit;
+    private List<Produit> produits;
 
     private String client;
     private double montantTotal;
@@ -34,12 +34,12 @@ public class Vente {
         this.date = date;
     }
 
-    public List<Produit> getProduit() {
-        return produit;
+    public List<Produit> getProduits() {
+        return produits;
     }
 
-    public void setProduit(List<Produit> produit) {
-        this.produit = produit;
+    public void addProduit(Produit produit) {
+        this.produits.add(produit);
     }
 
     public String getClient() {
@@ -58,4 +58,3 @@ public class Vente {
         this.montantTotal = montantTotal;
     }
 }
-

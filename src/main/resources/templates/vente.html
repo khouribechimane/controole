@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Manager</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #ffffff, #f7ca18, #ffffff, #2ecc71);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes gradientAnimation {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .navbar {
+            background-color: #3498db;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+
+        .logo {
+            font-size: 72px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: #555;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Electronic Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/produit}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/vente}">Ventes</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div th:switch="${ventes}" class="container my-2">
+
+    <th:block th:if="${#lists.isEmpty(ventes)}">
+        <div class="text-center">
+            <h2>No Ventes yet!</h2>
+        </div>
+    </th:block>
+
+    <th:block th:if="${not #lists.isEmpty(ventes)}">
+
+        <div class="text-center">
+            <h1>Ventes List</h1>
+        </div>
+        <table id="ventesTable" border="1" class="table table-striped table-responsive-md text-center">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Produit</th>
+                <th>Client</th>
+                <th>Montant Total</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vente : ${ventes}">
+                <td th:text="${vente.id}"></td>
+                <td th:text="${vente.date}"></td>
+                <td>
+                    <div th:each="produit : ${vente.produits}">
+                        <span th:text="|Nom: ${produit.nom}, Marque: ${produit.marque}, Prix: ${produit.prix}|"></span>
+                    </div>
+                </td>
+                <td th:text="${vente.client}"></td>
+                <td th:text="${vente.montantTotal}"></td>
+
+                <td><a th:href="@{/vente/edit/{id}(id=${vente.id})}" class="btn btn-primary">Modifier</a>
+                    <a href="#" id="delete" class="btn btn-danger" data-toggle="modal"
+                       data-target="#deleteConfirmationModal"
+                       th:attr="data-venteid=${vente.id}">Supprimer</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+</div>
+
+<div class="text-center">
+    <a th:href="@{/vente/add}" class="btn btn-primary btn-sm mx-auto">Ajouter Vente</a>
+</div>
+
+
+<!-- ... Votre code existant ... -->
+
+<!-- Modal for Delete Confirmation -->
+<div class="modal" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+     aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmation de suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cet élément ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <a href="#" class="btn btn-danger" onclick="confirmDelete()">Confirmer la suppression</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JavaScript pour mettre à jour le lien de suppression avec l'ID du user -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function confirmDelete() {
+        var employeeIdToDelete = parseInt(document.getElementById('delete').getAttribute('data-venteid'), 10);
+        var deleteLink = "/vente/delete/" + employeeIdToDelete;
+        window.location.href = deleteLink;
+    }
+
+    /*]]>*/
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

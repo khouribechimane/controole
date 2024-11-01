@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Vente Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #ffffff, #f7ca18, #ffffff, #2ecc71);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes gradientAnimation {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .navbar {
+            background-color: #3498db;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+
+        .logo {
+            font-size: 72px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: #555;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Electronic Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/produit}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/vente}">Vente</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container h-100 mt-5">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="border p-4">
+                <h1 class="text-center mb-4">Ajouter Vente</h1>
+                <form action="#" th:action="@{/vente/create}" th:object="${vente}" method="POST">
+                    <input type="date" th:field="*{date}" placeholder="Vente Date" class="form-control mb-4">
+                    <select th:field="*{produits}" class="form-control mb-4">
+                        <option value="" disabled selected>Choisir Produit</option>
+                        <option th:each="produit: ${produits}" th:value="${produit.id}" th:text="|${produit.nom} - ${produit.marque}|" ></option>
+                    </select>
+                    <input type="text" th:field="*{client}" placeholder="Vente Client" class="form-control mb-4">
+                    <input type="text" th:field="*{montantTotal}" placeholder="Vente Montant Total" class="form-control mb-4">
+                    <hr>
+                    <input type="submit" class="btn btn-primary btn-block" value="Ajouter Vente">
+                </form>
+                <hr>
+                <a th:href="@{/vente}" class="btn btn-warning btn-block">retour a la liste des ventes</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

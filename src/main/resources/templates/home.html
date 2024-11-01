@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Market</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #ffffff, #f7ca18, #ffffff, #2ecc71);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #000;
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes gradientAnimation {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .navbar {
+            background-color: #3498db;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-link {
+            color: #fff;
+        }
+
+        .logo {
+            font-size: 72px;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: #555;
+        }
+
+        .content {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Electronic Market</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/produit}">Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/vente}">Ventes</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/}">Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content">
+    <div class="logo">E-Market</div>
+    <p class="tagline">Your one-stop shop for electronics</p>
+    <a th:href="@{/market}" class="btn btn-primary">Go to Market</a>
+    <a th:href="@{/produit}" class="btn btn-primary">Go to Products Manager</a>
+    <a th:href="@{/vente}" class="btn btn-primary">Go to Purchases Manger</a>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
+        integrity="sha384-4oVQezTtNKO+zO4ObEMJloYkHrfuWEeF5voVnYpQ37OLehB9Fzvw5iWs3bjHl4GH"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+dpu3ejiO44ni9XIo4PUaD5xo3p1Bj8rdwt2M7VNhE5Xx4DpT"
+        crossorigin="anonymous"></script>
+</body>
+</html>

@@ -25,7 +25,7 @@ public class LoginController {
             model.addAttribute("msg",msg);
             return "login";
 
-        }else {
+        } else {
             return "home";
         }
     }

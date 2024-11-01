@@ -32,7 +32,7 @@ public class ProduitController {
         List<Vente> ventes = venteRepository.findByProduitId(id);
         for (Vente vente : ventes) {
             vente.getProduits().remove(produit);
-            venteRepository.save(vente);  // Save to update the relationship
+            venteRepository.save(vente);
         }
         produitRepository.deleteById(id);
 

@@ -27,6 +27,11 @@ public class MarketController {
         return "market";
     }
 
+    @GetMapping("/admin")
+    public String showAdminHome(Model model) {
+        return "home";
+    }
+
     @PostMapping("/basket/add")
     public String addToBasket(@RequestParam("productId") long productId, @RequestParam("client") String client, Model model) {
         Produit produit = produitRepository.findById(productId)

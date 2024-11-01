@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Long> {
     @Query("SELECT l FROM User l WHERE l.username = :username AND l.password = :password")
     public User verifie(@Param("username") String username, @Param("password") String password);
 }

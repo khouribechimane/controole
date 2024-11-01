@@ -29,7 +29,6 @@ public class VenteController {
     public String deleteVente(@PathVariable("id") long id, Model model) {
         Vente vente = venteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid vente Id:" + id));
-//        produitRepository.delete(vente.getProduit());
         venteRepository.delete(vente);
         model.addAttribute("ventes", venteRepository.findAll());
         return "vente";

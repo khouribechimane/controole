@@ -28,15 +28,11 @@ public class MarketController {
     }
 
     @PostMapping("/basket/add")
-    public String addToBasket(@RequestParam("productId") long productId, Model model) {
-        // Retrieve the product by its ID
+    public String addToBasket(@RequestParam("productId") long productId, @RequestParam("client") String client, Model model) {
         Produit produit = produitRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid product ID: " + productId));
-        // Add product to the user's basket (this can be a session or database operation)
-        venteService.addVente(produit);
-
+        venteService.addVente(produit, client);
         model.addAttribute("produits", produitRepository.findAll());
-        // Redirect to product overview or basket page
         return "market";
     }
 }

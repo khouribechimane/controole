@@ -99,8 +99,9 @@
                     <h5 class="card-title" th:text="${product.nom}">Product Name</h5>
                     <p class="card-text"><strong>Brand:</strong> <span th:text="${product.marque}">Brand Name</span></p>
                     <p class="card-text"><strong>Price:</strong> <span th:text="${product.prix}">0</span> MAD</p>
-                    <form th:action="@{/market/basket/add}" method="post">
+                    <form th:action="@{/market/basket/add}" method="post" onsubmit="return addClientName(this);">
                         <input type="hidden" th:name="productId" th:value="${product.id}"/>
+                        <input type="hidden" th:name="client" th:id="clientName"/>
                         <button type="submit" class="btn btn-add">Add to Basket</button>
                     </form>
                 </div>
@@ -108,7 +109,18 @@
         </div>
     </div>
 </div>
-
+<script>
+    function addClientName(form) {
+        const clientName = prompt("Please enter your name to add this item to the basket:");
+        if (clientName) {
+            form.querySelector('#clientName').value = clientName;
+            return true;
+        } else {
+            alert("Client name is required to add the item to the basket.");
+            return false;
+        }
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

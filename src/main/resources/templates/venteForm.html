@@ -90,13 +90,13 @@
             <div class="border p-4">
                 <h1 class="text-center mb-4">Ajouter Vente</h1>
                 <form action="#" th:action="@{/vente/create}" th:object="${vente}" method="POST">
-                    <input type="date" th:field="*{date}" placeholder="Vente Date" class="form-control mb-4">
+                    <input type="date" th:field="*{date}" placeholder="Date" class="form-control mb-4">
                     <select th:field="*{produits}" class="form-control mb-4">
                         <option value="" disabled selected>Choisir Produit</option>
                         <option th:each="produit: ${produits}" th:value="${produit.id}" th:text="|${produit.nom} - ${produit.marque}|" ></option>
                     </select>
-                    <input type="text" th:field="*{client}" placeholder="Vente Client" class="form-control mb-4">
-                    <input type="text" th:field="*{montantTotal}" placeholder="Vente Montant Total" class="form-control mb-4">
+                    <input type="text" th:field="*{client}" placeholder="Nom Client" class="form-control mb-4">
+                    <input type="text" th:field="*{montantTotal}" placeholder="Montant Total" class="form-control mb-4">
                     <hr>
                     <input type="submit" class="btn btn-primary btn-block" value="Ajouter Vente">
                 </form>

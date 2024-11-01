@@ -23,7 +23,7 @@ public class Vente {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date date;
 
-    @OneToMany(mappedBy = "vente", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "vente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Produit> produits;
 
     private String client;

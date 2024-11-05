@@ -114,9 +114,8 @@
                 <td th:text="${produit.prix}"></td>
 
                 <td><a th:href="@{/produit/edit/{id}(id=${produit.id})}" class="btn btn-primary">Modifier</a>
-                    <a href="#" id="delete" class="btn btn-danger" data-toggle="modal"
-                       data-target="#deleteConfirmationModal"
-                       th:attr="data-produitid=${produit.id}">Supprimer</a>
+                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmationModal"
+                       th:attr="data-produitid=${produit.id},onclick='setDeleteId(' + ${produit.id} + ')'">Supprimer</a>
                 </td>
 
             </tr>
@@ -160,13 +159,18 @@
 
 <!-- JavaScript pour mettre à jour le lien de suppression avec l'ID du user -->
 <script th:inline="javascript">
-    /*<![CDATA[*/
-    function confirmDelete() {
-        var employeeIdToDelete = parseInt(document.getElementById('delete').getAttribute('data-produitid'), 10);
-        var deleteLink = "/produit/delete/" + employeeIdToDelete;
-        window.location.href = deleteLink;
+    var produitIdToDelete;
+
+    function setDeleteId(id) {
+        produitIdToDelete = id;  // Set the ID to delete when the delete button is clicked
     }
-    /*]]>*/
+
+    function confirmDelete() {
+        if (produitIdToDelete) {
+            var deleteLink = "/produit/delete/" + produitIdToDelete;
+            window.location.href = deleteLink;
+        }
+    }
 </script>
 
 
@@ -182,5 +186,4 @@
         crossorigin="anonymous"></script>
 
 </body>
-
 </html>

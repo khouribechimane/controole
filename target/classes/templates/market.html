@@ -60,8 +60,14 @@
             text-align: center;
         }
 
-        .product-card { margin-bottom: 20px; }
-        .btn-add { background-color: #3498db; color: #fff; }
+        .product-card {
+            margin-bottom: 20px;
+        }
+
+        .btn-add {
+            background-color: #3498db;
+            color: #fff;
+        }
 
     </style>
 </head>
@@ -76,8 +82,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/market">Market</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="/market">Market</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/login}">Login</a></li>
             </ul>
         </div>
